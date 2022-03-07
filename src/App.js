@@ -1,6 +1,6 @@
 
 import './App.css';
-import {useState, useMemo} from "react";
+import {useState, useMemo, useCallback} from "react";
 import Header from './components/Header';
 
 
@@ -8,18 +8,19 @@ function App() {
   const [number, setNumber] = useState(0);
   const [text,setText] = useState("");
 
-  const data = useMemo(() => {
-    return calculateObject(number);
-  }, [number]);
+  const increment = useCallback(() => {
+    setNumber((prevState) => prevState+1)
+  }, [])
 
-  // const data = calculateObject();
+ 
 
   return (
     <div className="App">
-    <Header data= {data} />
+    <Header increment={increment}/>
+
     <hr />
     <h1>{number}</h1>
-    <button onClick={() => setNumber(number+1)}>Click</button>
+    
     
      <br />
      <br />
@@ -29,12 +30,5 @@ function App() {
   );
 }
 
-function calculateObject(number){
-  console.log("Calculating...");
-  for(let i=0; i<10000000; i++) {}
-  console.log("Calculating completed!");
 
-
-  return {name: "Khan", number}
-}
 export default App;
